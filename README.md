@@ -1,3 +1,86 @@
+[![Release](https://jitpack.io/v/adam-dpg/snyk-gradle-plugin.svg)](https://jitpack.io/#adam-dpg/snyk-gradle-plugin)
+
+# Prototype Snyk Plugin for Gradle
+
+[This project](https://github.com/adam-dpg/snyk-gradle-plugin/) contains a proposed Snyk Gradle
+plugin that re-implements the existing plugin in Kotlin.
+
+Benefits
+
+* compatible with the Gradle build and configuration caches
+* more options for configuration
+* after downloading the Snyk CLI, it validates the checksum
+
+See https://github.com/snyk/gradle-plugin/pull/17/ for updates.
+
+## Getting started
+
+To use it, add [Jitpack as a plugin repository](https://jitpack.io/#adam-dpg/snyk-gradle-plugin), for
+example, with centralized repository definitions;
+
+```kotlin
+//settings.gradle.kts
+dependencyResolutionManagement {
+  repositories {
+    mavenCentral()
+  }
+
+  pluginManagement {
+    repositories {
+      gradlePluginPortal()
+      mavenCentral()
+      maven("https://jitpack.io") // add Jitpack
+    }
+  }
+}
+```
+
+```kotlin
+//build.gradle.kts
+plugins {
+  id("io.snyk.gradle.plugin.snyk-kt") version "master-SNAPSHOT"
+}
+```
+
+### Usage
+
+```kotlin
+//build.gradle.kts
+snyk {
+  // The auth token is automatically detected from either
+  // - SNYK_TOKEN environment variable
+  // - a SNYK_TOKEN variable in $GRADLE_USER_HOME/gradle.properties
+
+  // You can also manually set it
+  snykToken.set("1234-1234-1234")
+  // or use a custom environment variable
+  snykToken.set(providers.environmentVariable("CUSTOM_SNYK_TOKEN_ENV_VAR"))
+
+  // Set arguments that will be added to the Snyk task
+  defaultArguments.add("--print-deps")
+
+  // helper setter for --severity-threshold
+  defaultSeverity.set(SnykExtension.Severity.CRITICAL)
+
+  // ⚠️ auto-update is not yet implemented
+  cliAutoUpdateEnabled.set(false)
+
+  // where the Snyk CLI should be downloaded
+  cliDownloadDir.set(layout.projectDirectory.dir(".gradle/snyk"))
+
+  // set the version and variant to download
+  cliVersion.set("v1.919.0")
+  cliFilename.set("snyk-macos") // calculated based on the host OS
+
+  // by default the CLI is downloaded from GitHub, and the download URL is 
+  // computed based on the CLI version and filename.
+  // Only if necessary, set a manual download URL - this will override the cliVersion!
+  cliSourceUri.set("https://my-own-download-url.com/snyk-cli")
+}
+```
+
+---
+
 ![Snyk logo](https://snyk.io/style/asset/logo/snyk-print.svg)
 
 # Snyk plugin for Gradle
