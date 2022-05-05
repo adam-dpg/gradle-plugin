@@ -1,3 +1,44 @@
+[![Release](https://jitpack.io/v/adam-dpg/snyk-gradle-plugin.svg)](https://jitpack.io/#adam-dpg/snyk-gradle-plugin)
+
+# Prototype Snyk Plugin for Gradle
+
+[This project](https://github.com/adam-dpg/snyk-gradle-plugin/) contains a proposed Snyk Gradle
+plugin
+that re-implements the existing plugin in Kotlin.
+
+It is compatible with the Gradle build and configuration caches, so it is faster.
+
+It has more options for configuration.
+
+To use it, add [Jitpack as a plugin repository](https://jitpack.io/#adam-dpg/gradle-plugin), for
+example, with centralized repository definitions;
+
+```kotlin
+//settings.gradle.kts
+dependencyResolutionManagement {
+  repositories {
+    mavenCentral()
+  }
+
+  pluginManagement {
+    repositories {
+      gradlePluginPortal()
+      mavenCentral()
+      maven("https://jitpack.io") // add Jitpack
+    }
+  }
+}
+```
+
+```kotlin
+//build.gradle.kts
+plugins {
+  id("io.snyk.gradle.plugin.snyk-kt") version "master-SNAPSHOT"
+}
+```
+
+---
+
 ![Snyk logo](https://snyk.io/style/asset/logo/snyk-print.svg)
 
 # Snyk plugin for Gradle
