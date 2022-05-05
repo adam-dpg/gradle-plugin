@@ -5,11 +5,13 @@
 [This project](https://github.com/adam-dpg/snyk-gradle-plugin/) contains a proposed Snyk Gradle
 plugin that re-implements the existing plugin in Kotlin.
 
-
 Benefits
-* compatible with the Gradle build and configuration caches 
+
+* compatible with the Gradle build and configuration caches
 * more options for configuration
-* validates the Snyk CLI checksum
+* after downloading the Snyk CLI, it validates the checksum
+
+See https://github.com/snyk/gradle-plugin/pull/17/ for updates.
 
 ## Getting started
 
@@ -60,14 +62,15 @@ snyk {
   // helper setter for --severity-threshold
   defaultSeverity.set(SnykExtension.Severity.CRITICAL)
 
-  // not yet implemented
+  // ⚠️ auto-update is not yet implemented
   cliAutoUpdateEnabled.set(false)
 
   // where the Snyk CLI should be downloaded
   cliDownloadDir.set(layout.projectDirectory.dir(".gradle/snyk"))
 
+  // set the version and variant to download
   cliVersion.set("v1.919.0")
-  cliFilename.set("")
+  cliFilename.set("snyk-macos") // calculated based on the host OS
 
   // by default the CLI is downloaded from GitHub, and the download URL is 
   // computed based on the CLI version and filename.
