@@ -1,15 +1,24 @@
 plugins {
-  groovy
   `java-gradle-plugin`
   `java-library`
-  buildsrc.convention.`functional-test`
   id("com.gradle.plugin-publish") version "0.21.0"
   kotlin("jvm")
   `kotlin-dsl`
+  id("me.qoomon.git-versioning") version "5.2.0"
+  buildsrc.convention.`maven-publish`
 }
 
 group = "io.snyk.gradle.plugin"
-version = "0.4"
+version = "0.0.0-SNAPSHOT"
+gitVersioning.apply {
+  refs {
+    branch(".+") { version = "\${ref}-SNAPSHOT" }
+    tag("v(?<version>.*)") { version = "\${ref.version}" }
+  }
+
+  // optional fallback configuration in case of no matching ref configuration
+  rev { version = "\${commit}" }
+}
 
 pluginBundle {
   website = "https://github.com/snyk/gradle-plugin"
@@ -32,12 +41,4 @@ gradlePlugin {
 tasks.wrapper {
   gradleVersion = "7.4.2"
   distributionType = Wrapper.DistributionType.ALL
-}
-
-dependencies {
-  implementation("org.json:json:20200518")
-
-  testImplementation("org.spockframework:spock-core:2.0-groovy-2.5")
-  testImplementation("junit:junit:4.13.1")
-  testImplementation("org.mockito:mockito-core:2.7.22")
 }
