@@ -15,7 +15,7 @@ See https://github.com/snyk/gradle-plugin/pull/17/ for updates.
 
 ## Getting started
 
-To use it, add [Jitpack as a plugin repository](https://jitpack.io/#adam-dpg/gradle-plugin), for
+To use it, add [Jitpack as a plugin repository](https://jitpack.io/#adam-dpg/snyk-gradle-plugin), for
 example, with centralized repository definitions;
 
 ```kotlin
