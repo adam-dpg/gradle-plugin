@@ -1,11 +1,12 @@
 plugins {
-  `java-gradle-plugin`
-  `java-library`
-  id("com.gradle.plugin-publish") version "0.21.0"
-  kotlin("jvm")
-  `kotlin-dsl`
-  id("me.qoomon.git-versioning") version "5.2.0"
   buildsrc.convention.`maven-publish`
+  buildsrc.convention.`kotlin-jvm`
+
+  `kotlin-dsl`
+  `java-gradle-plugin`
+
+  id("me.qoomon.git-versioning") version "5.2.0"
+  id("com.gradle.plugin-publish") version "0.21.0"
 }
 
 group = "io.snyk.gradle.plugin"
