@@ -24,7 +24,12 @@ plugins.withType(JavaPlugin::class.java) {
 tasks
   .matching { it.name in listOf("publish", "publishToMavenLocal") }
   .configureEach {
+
+    val projectGroup = project.group
+    val projectName = project.name
+    val projectVersion = project.version
+
     doLast {
-      logger.lifecycle("[${this.name}] ${project.group}:${project.name}:${project.version}")
+      logger.lifecycle("[${this.name}] ${projectGroup}:${projectName}:${projectVersion}")
     }
   }
